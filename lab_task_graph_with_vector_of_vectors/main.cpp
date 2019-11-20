@@ -107,15 +107,20 @@ int main()
 		m.addEdge(11, 16);
 		m.addEdge(12, 17);
 		m.addEdge(12, 18);
-		m.remVertex(8); 
+		//m.addEdge(1, 9);
+		//m.remVertex(8); 
 
 		m.printGraph();
 
-		cout << "**** DFS ****" << endl;
-		m.dfs_recursive(0, 1);
-		cout << endl;
-		cout << "**** BFS ****" << endl;
-		m.bfs_recursive(0, 1);
+		//cout << "**** DFS ****" << endl;
+		//m.dfs_recursive(0, 1);
+		//cout << endl;
+		//cout << "**** BFS ****" << endl;
+		//m.bfs_recursive(0, 1);
+		//cout << endl;
+		//cout << "**** BFS ****" << endl;
+
+		m.dfs(14, 1);
 	}
 
 

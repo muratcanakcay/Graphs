@@ -43,6 +43,8 @@ public:
 	bool isConnected(bool);
 	int v_count(bool);
 	int e_count(bool);
+	int dfs(int, int);
 	int dfs_recursive(int, int, vector<bool>* = NULL);
+	int bfs(int, int);
 	int bfs_recursive(int, int, vector<bool>* = NULL, Queue* = NULL);
 };

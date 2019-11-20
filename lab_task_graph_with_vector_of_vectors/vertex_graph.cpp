@@ -317,6 +317,78 @@ void Graph::printGraph() // prints the graph
 	cout << endl;
 }
 
+int Graph::dfs(int label, int root)
+{
+	if (index(root) == -1) // node d.n.e. in graph 
+	{
+		cout << "The root to start the dfs search does not exist in graph" << endl;
+		return 0;
+	}
+	 
+	vector<bool> visited; // initialize list of visited nodes 
+	for (int i = 0; i < size; i++)
+		visited.push_back(false);
+
+	Stack* stack = new Stack; // initialize the stack with root
+	stack->push(root);
+
+	Stack* path = new Stack; // initialize empty path
+	
+	int node;
+	int total_visited = 1; // initialize visited node counter
+	
+	while (!stack->isEmpty())
+	{
+		if (DEBUG) cout << "Stack: " << stack->contents() << endl;
+				
+		node = stack->peek(); // top node in stack for visiting
+		
+		if (visited[index(node)])
+		{
+			if (DEBUG) cout << "***POPPING*** " << stack->peek() << endl;
+			stack->pop();
+			path->pop();
+		}
+		else
+		{
+			cout << "Visited: " << node << endl; // print the visited node
+			path->push(node);
+		}
+		
+		if (DEBUG) cout << "Path: " << path->contents() << endl;
+		
+		visited[index(node)] = true; // mark root as visited
+
+		if (node == label) // search item found
+		{
+			cout << "FOUND!" << endl << endl;
+			cout << "The path from " << root << " to " << label << " is:" << endl;
+			Stack* tmp = new Stack(); 
+			while (!path->isEmpty())
+				tmp->push(path->pop());
+			cout << tmp->pop();
+			while (!tmp->isEmpty())
+				cout << " -> " << tmp->pop();
+			cout << endl;
+
+			return 1;
+		}
+					   
+		for (int n : graph[index(node)].neighbors) // add neighbors to the stack
+			if (!visited[index(n)])
+			{
+				if (NEIGHBORS) cout << "Adding neighbor of " << node << " : " << n << " to stack." << endl;
+				stack->push(n);
+				//visited[index(n)] = true; // mark node as visited
+				total_visited += 1;
+			}
+	}
+
+	cout << total_visited << " vertexes visited out of " << size << endl;
+	if (total_visited == size) cout << "The graph is connected." << endl;
+
+	return 0;
+}
 int Graph::dfs_recursive(int label, int node,  vector<bool>* visited) // default value for visited is NULL
 {
 	if (DEBUG) cout << "Index return from index() is  " << index(node) << endl;
@@ -357,6 +429,55 @@ int Graph::dfs_recursive(int label, int node,  vector<bool>* visited) // default
 	}
 	
 	return 0; // search item not found
+}
+
+int Graph::bfs(int label, int root)
+{
+	if (index(root) == -1) // node d.n.e. in graph 
+	{
+		cout << "The root to start the dfs search does not exist in graph" << endl;
+		return 0;
+	}
+
+	vector<bool> visited; // initialize list of visited nodes 
+	for (int i = 0; i < size; i++)
+		visited.push_back(false);
+
+	Queue* queue = new Queue; // initialize the queue
+	queue->enqueue(root);
+
+	int total_visited = 1; // initialize visited node counter
+	visited[index(root)] = true; // mark root as visited
+
+	while (!queue->isEmpty())
+	{
+		if (DEBUG)
+			cout << "Queue: " << queue->contents() << endl;
+
+		int node = queue->dequeue(); // top node in stack for visiting
+
+		if (node == label) // search item found
+		{
+			cout << "FOUND!" << endl << endl;
+			return 1;
+		}
+
+		cout << "Visited: " << node << endl; // print the visited node 
+
+		for (int n : graph[index(node)].neighbors) // add neighbors to the stack
+			if (visited[index(n)] == false)
+			{
+				if (NEIGHBORS) cout << "Adding neighbor of " << node << " : " << n << " to queue." << endl;
+				queue->enqueue(n);
+				visited[index(n)] = true; // mark node as visited
+				total_visited += 1;
+			}
+	}
+
+	cout << total_visited << " vertexes visited out of " << size << endl;
+	if (total_visited == size) cout << "The graph is connected." << endl;
+
+	return 0;
 }
 int Graph::bfs_recursive(int label, int node, vector<bool>* visited, Queue* queue) // default value for visited and queue is NULL
 {

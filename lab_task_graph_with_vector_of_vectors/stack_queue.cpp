@@ -8,7 +8,6 @@ Stack::Stack() //constructor
 	//stack starts empty, i.e. top points to NULL
 	top = NULL;
 }
-
 Stack::~Stack() //deconstructor
 {
 	while (!isEmpty())
@@ -16,7 +15,6 @@ Stack::~Stack() //deconstructor
 		pop();
 	}
 }
-
 void Stack::push(int x)
 {
 	// create a Node to store x
@@ -34,7 +32,6 @@ void Stack::push(int x)
 		top = current; // current is the new top
 	}
 }
-
 int Stack::pop()
 {
 	if (!isEmpty())
@@ -48,7 +45,6 @@ int Stack::pop()
 	cout << "Stack is empty." << endl;
 	return(NULL);
 }
-
 string Stack::contents()
 {
 	string result = "(top) <- ";
@@ -74,7 +70,6 @@ Queue::Queue() //constructor
 	front = NULL;
 	rear = NULL;
 }
-
 Queue::~Queue() //deconstructor
 {
 	while (!isEmpty())
@@ -82,7 +77,6 @@ Queue::~Queue() //deconstructor
 		dequeue();
 	}
 }
-
 void Queue::enqueue(int x)
 {
 	// create a Node to store x
@@ -101,7 +95,6 @@ void Queue::enqueue(int x)
 		rear = current; // current is the new rear
 	}
 }
-
 int Queue::dequeue()
 {
 	if (!isEmpty())
@@ -115,7 +108,6 @@ int Queue::dequeue()
 	cout << "Queue is empty." << endl;
 	return(NULL);
 }
-
 string Queue::contents()
 {
 	string result = "(front) <- ";

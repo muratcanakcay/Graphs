@@ -19,6 +19,7 @@ public:
 	~Stack(); //deconstructor
 	void push(int x); //pushes a node with data=x to the top of the stack
 	int pop(); //removes the top node and returns its data value
+	int peek() { if (!isEmpty()) return top->data; }  
 	string contents(); //prints the contents of the stack
 	bool isEmpty() { return top == NULL; } //inline definition - returns 1 if stack is empty
 };
