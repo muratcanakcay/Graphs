@@ -41,10 +41,14 @@ public:
 	int minDeg(bool);
 	bool isEulerian(bool);
 	bool isConnected(bool);
+	bool isEmpty() { return (size == 0); };
 	int v_count(bool);
 	int e_count(bool);
+	int isVisitedFull(vector<bool> visited);
+
 	int dfs(int, int);
 	int dfs_recursive(int, int, vector<bool>* = NULL);
-	int bfs(int, int);
+	int bfs(int, int, vector<bool>* = NULL);
 	int bfs_recursive(int, int, vector<bool>* = NULL, Queue* = NULL);
+	void bfs_component();
 };

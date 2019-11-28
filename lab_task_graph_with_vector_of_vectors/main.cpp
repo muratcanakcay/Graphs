@@ -87,7 +87,7 @@ int main()
 		h.bfs_recursive(0, 1);
 	}
 
-	if (1)
+	if (0)
 	{
 		Graph m(18);
 		m.addEdge(1, 2);
@@ -107,7 +107,7 @@ int main()
 		m.addEdge(11, 16);
 		m.addEdge(12, 17);
 		m.addEdge(12, 18);
-		//m.addEdge(1, 9);
+		m.addEdge(1, 9);
 		//m.remVertex(8); 
 
 		m.printGraph();
@@ -120,8 +120,21 @@ int main()
 		//cout << endl;
 		//cout << "**** BFS ****" << endl;
 
-		m.dfs(14, 1);
+		m.dfs(18, 1);
 	}
+
+	if (1)
+	{
+		Graph m(6);
+		/*m.addEdge(1, 2);*/
+		m.addEdge(1, 4);
+		m.addEdge(4, 5);
+		/*m.addEdge(5, 6);
+		m.addEdge(2, 3);*/
+		m.addEdge(3, 6);
+		m.bfs_component();
+	}
+
 
 
 

@@ -317,6 +317,18 @@ void Graph::printGraph() // prints the graph
 	cout << endl;
 }
 
+
+
+int Graph::isVisitedFull(vector<bool> visited) {
+	vector<bool>::iterator it = visited.begin();
+	for (int i = 0; it != visited.end(); i++, it++) {
+		if (*it == false) {
+			return i;
+		}
+	}
+	return -1;
+}
+
 int Graph::dfs(int label, int root)
 {
 	if (index(root) == -1) // node d.n.e. in graph 
@@ -431,7 +443,7 @@ int Graph::dfs_recursive(int label, int node,  vector<bool>* visited) // default
 	return 0; // search item not found
 }
 
-int Graph::bfs(int label, int root)
+int Graph::bfs(int label, int root, vector<bool>* visited)
 {
 	if (index(root) == -1) // node d.n.e. in graph 
 	{
@@ -439,15 +451,18 @@ int Graph::bfs(int label, int root)
 		return 0;
 	}
 
-	vector<bool> visited; // initialize list of visited nodes 
-	for (int i = 0; i < size; i++)
-		visited.push_back(false);
+	if (visited == NULL)
+	{
+		vector<bool> visited; // initialize list of visited nodes 
+		for (int i = 0; i < size; i++)
+			visited.push_back(false);
+	}
 
 	Queue* queue = new Queue; // initialize the queue
 	queue->enqueue(root);
 
 	int total_visited = 1; // initialize visited node counter
-	visited[index(root)] = true; // mark root as visited
+	(*visited)[index(root)] = true; // mark root as visited
 
 	while (!queue->isEmpty())
 	{
@@ -465,11 +480,11 @@ int Graph::bfs(int label, int root)
 		cout << "Visited: " << node << endl; // print the visited node 
 
 		for (int n : graph[index(node)].neighbors) // add neighbors to the stack
-			if (visited[index(n)] == false)
+			if ((*visited)[index(n)] == false)
 			{
 				if (NEIGHBORS) cout << "Adding neighbor of " << node << " : " << n << " to queue." << endl;
 				queue->enqueue(n);
-				visited[index(n)] = true; // mark node as visited
+				(*visited)[index(n)] = true; // mark node as visited
 				total_visited += 1;
 			}
 	}
@@ -528,4 +543,25 @@ int Graph::bfs_recursive(int label, int node, vector<bool>* visited, Queue* queu
 		bfs_recursive(label, queue->dequeue(), visited, queue);
 		
 	return 0; // search item not found
+}
+void Graph::bfs_component() {
+	if (isEmpty()) {
+		cout << "Graph is Empty!" << endl;
+		return;
+	}
+	//Create vector for Visited Vertices and set all values to false
+	vector<bool> visited(v_count(0), false);
+	//Call of isVisited() function to check if all values have been visited
+	//if not then return the value of the next vertex not visited
+	int check = isVisitedFull(visited);
+	int components = 0;
+	//loop until all vertices have been visited
+	while (check != -1) {
+		bfs(0, graph[check].label, &visited);
+		cout << endl;
+		check = isVisitedFull(visited);
+		components++;
+	}
+	cout << "Number of Components = " << components << endl;
+
 }
